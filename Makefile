@@ -1,15 +1,9 @@
 #Makefile - Trent Ellingsen
 CC=g++
-#MARSYAS_INSTALL=${HOME}/usr
-#CFLAGS=-Wall -lglut -lGL -lGLU -g -O4
 MARSYAS_INSTALL = lib
-CFLAGS=-framework OpenGL -framework GLUT -framework CoreAudio -framework CoreMidi -framework CoreFoundation -framwork AudioToolBox
+CFLAGS=-framework OpenGL -framework GLUT -framework CoreAudio -framework CoreMidi -framework CoreFoundation -framework AudioToolBox
 LDFLAGS=
 LIB_MARYAS=-I${MARSYAS_INSTALL}/marsyas -L${MARSYAS_INSTALL} -lmarsyas 
-LIB_PATH=lib/FMOD\ Programmers\ API/api/lib
-INC_PATH=lib/FMOD\ Programmers\ API/api/inc
-#LIB_FMODEX=-I${INC_PATH} -L${LIB_PATH} -lfmodex 
-LIB_FMODEX=${LIB_PATH}/libfmodex.dylib
 
 ALL=music
 

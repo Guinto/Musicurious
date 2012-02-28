@@ -27,7 +27,7 @@ void Scene::updateKeyboardStateInObjects() {
 }
 
 void Scene::setup(string songFileName) {
-	const char *fn = songFileName.c_str();
+	/*const char *fn = songFileName.c_str();
 
 	    AudioPlayer* ap = AudioPlayer::file(fn);
 
@@ -69,7 +69,7 @@ void Scene::setup(string songFileName) {
 	        i = (i+1)%4;
 	    } while (ap->isPlaying());
 
-	    delete ap;
+	    delete ap;*/
    //objects.add(new Cube());
    /*Model *sharky = new Model();
    sharky->setModelFile((char*)"model/sharky/sharky_complete.obj");
