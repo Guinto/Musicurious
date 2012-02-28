@@ -17,6 +17,7 @@ class Scene {
       ObjectCollection objects;
       Camera camera;
       Ground ground;
+      AudioPlayer* ap;
 
       void updateKeyboardStateInObjects();
 
