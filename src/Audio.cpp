@@ -140,5 +140,5 @@ float Audio::getLoudnessFileLength() {
 }
 
 float Audio::getPitchFileLength() {
-	return 474;
+	return 284;
 }

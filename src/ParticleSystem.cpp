@@ -63,8 +63,8 @@ Particle* ParticleSystem::createCustomParticle() {
    particleProperties.deathSize = p->setDeathSize(particleProperties.deathSize);
    particleProperties.birthColor = p->setBirthColor(particleProperties.birthColor);
    particleProperties.deathColor = p->setDeathColor(particleProperties.deathColor);
-   /*particleProperties.velocity = p->setVelocity(particleProperties.velocity);
-   particleProperties.acceration = p->setAcceleration(particleProperties.acceleration);
+   particleProperties.velocity = p->setVelocity(particleProperties.velocity);
+   /*particleProperties.acceration = p->setAcceleration(particleProperties.acceleration);
    particleProperties.force = p->setForce(particleProperties.force);*/
    p->applySettings();
    return p;
