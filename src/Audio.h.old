@@ -1,0 +1,24 @@
+#ifndef _AUDIO_H_
+#define _AUDIO_H_
+
+#include "../lib/marsyas/MarSystemManager.h"
+using namespace std;
+using namespace Marsyas;
+
+#define VOLUME_LEVEL 1.0f
+
+class Audio {
+   private:
+      MarSystem* playbackNetwork;
+      void initPlayer(string songFileName);
+      const realvec& extractSpectrum();
+      void setUpExtractSpectrum(MarSystemManager manager);
+      void setUpExtractPitch();
+      void extractPitch(string songFileName);
+
+   public:
+      void play(string songFileName);
+      void update(float timeElapsed);
+
+};
+#endif

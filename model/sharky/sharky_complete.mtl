@@ -1,0 +1,80 @@
+newmtl Bone
+Ka 0 0 0
+Kd 0.784314 0.784314 0.784314
+Ks 0 0 0
+Ni 1
+Ns 400
+Tf 1 1 1
+d 1
+
+newmtl body
+Ka 0 0 0
+Kd 0.435294 0.462745 0.556863
+Ks 0.16 0.16 0.16
+Ni 1
+Ns 165
+Tf 1 1 1
+d 1
+map_Kd shraky_body.tga
+
+newmtl eyeekture
+Ka 0 0 0
+Kd 0.784314 0.784314 0.784314
+Ks 0.75 0.75 0.75
+Ni 1
+Ns 400
+Tf 1 1 1
+d 1
+map_Kd sharkeye.jpg
+
+newmtl eyewhite
+Ka 0 0 0
+Kd 0.941176 0.941176 0.941176
+Ks 0 0 0
+Ni 1
+Ns 400
+Tf 1 1 1
+d 1
+
+newmtl gigibawah
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.75 0.75 0.75
+Ni 1
+Ns 344
+Tf 1 1 1
+d 1
+map_Kd shraky_gigi.tga
+map_bump shraky_bump.tga
+bump shraky_bump.tga
+
+newmtl gigitop
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.75 0.75 0.75
+Ni 1
+Ns 344
+Tf 1 1 1
+d 1
+map_Kd shraky_gigi.tga
+map_bump shraky_bump.tga
+bump shraky_bump.tga
+
+newmtl kornea
+Ka 0 0 0
+Kd 0.784314 0.784314 0.784314
+Ks 0.8 0.8 0.8
+Ni 1.6
+Ns 400
+Tf 1 1 1
+d 0.1
+
+newmtl mouth
+Ka 0 0 0
+Kd 0.458824 0.235294 0.207843
+Ks 0.55 0.55 0.55
+Ni 1
+Ns 370
+Tf 1 1 1
+d 1
+
