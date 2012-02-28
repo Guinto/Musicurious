@@ -9,8 +9,8 @@ ALL=music
 
 all: $(ALL)
 
-music: Main.o Utilities.o Keyboard.o KeyboardState.o Mouse.o Window.o Camera.o Cube.o Object.o ObjectCollection.o Ground.o Scene.o Audio.o Model.o AudioPlayer.o
-	$(CC) $(CFLAGS) ${LIB_MARYAS} -o $@ $^
+music: Main.o Utilities.o Keyboard.o KeyboardState.o Mouse.o Window.o Camera.o Cube.o Particle.o ParticleSystem.o Object.o ObjectCollection.o Ground.o Scene.o Audio.o Model.o AudioPlayer.o
+	$(CC) -g $(CFLAGS) ${LIB_MARYAS} -o $@ $^
 
 Main.o: src/Main.cpp src/*.h
 	$(CC) -c $^
@@ -31,6 +31,12 @@ Window.o: src/Window.cpp src/Window.h
 	$(CC) -c $^
 
 Camera.o: src/Camera.cpp src/Camera.h
+	$(CC) -c $^
+
+Particle.o: src/Particle.cpp src/Particle.h
+	$(CC) -c $^
+
+ParticleSystem.o: src/ParticleSystem.cpp src/ParticleSystem.h
 	$(CC) -c $^
 
 Cube.o: src/Cube.cpp src/Cube.h

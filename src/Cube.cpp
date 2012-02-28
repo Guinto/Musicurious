@@ -2,6 +2,7 @@
 
 Cube::Cube() {
    initializeDefaultSize();
+   particleSystem = new ParticleSystem();
    audio = new Audio();
    audio->play((string)"audio/test.wav");
 }
@@ -13,6 +14,8 @@ void Cube::initializeDefaultSize() {
 void Cube::update(float timeElapsed) {
    setTimeElapsed(timeElapsed);
    audio->update(timeElapsed);
+   particleSystem->setPosition(Point3d(position.x, position.y, position.z));
+   particleSystem->update(timeElapsed);
    movePositionWithPitch();
    growSizeWithLoudness();
 }
@@ -31,8 +34,11 @@ void Cube::setTimeElapsed(float newTimeElapsed) {
 
 void Cube::draw() {
    glPushMatrix(); {
-      glColor3f(DEFAULT_RED, DEFAULT_GREEN, DEFAULT_BLUE);
+      glColor3f(DEFAULT_CUBE_RED, DEFAULT_CUBE_GREEN, DEFAULT_CUBE_BLUE);
       glTranslatef(position.x, position.y, position.z);
       glutSolidCube(size);
+   } glPopMatrix();
+   glPushMatrix(); {
+	   particleSystem->draw();
    } glPopMatrix();
 }
