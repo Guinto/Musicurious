@@ -7,6 +7,10 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <CoreFoundation/CoreFoundation.h>
+#include <iostream>
+
+#include "AudioPlayer.h"
 
 using namespace std;
 using namespace Marsyas;
@@ -35,6 +39,8 @@ class Audio {
       float totalTime2;
       float loudness;
       float pitch;
+
+      AudioPlayer* ap;
 
       vector<float*> loudList;
       vector<float*>::iterator loudit;

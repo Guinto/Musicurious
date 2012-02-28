@@ -15,13 +15,6 @@ void Scene::update(float timeElapsed) {
    for (int i = 0; i < objects.size(); i++) {
       objects.get(i)->update(timeElapsed);
    }
-   if (ap->isPlaying()) {
-   CFRunLoopRunInMode (                           // 6
-   			kCFRunLoopDefaultMode,                     // 7
-   			0.25,                                      // 8
-   			false                                      // 9
-   		);
-   }
 }
 
 void Scene::setKeyboardState(KeyboardState newKeyboardState) {
@@ -34,18 +27,7 @@ void Scene::updateKeyboardStateInObjects() {
 }
 
 void Scene::setup(string songFileName) {
-	const char *fn = songFileName.c_str();
 
-	ap = AudioPlayer::file(fn);
-
-	if(!ap) {
-		std::cerr << "Error loading audio" << std::endl;
-		exit(EXIT_FAILURE);
-	}
-
-	ap->play();
-
-	//delete ap;
    objects.add(new Cube());
    /*Model *sharky = new Model();
    sharky->setModelFile((char*)"model/sharky/sharky_complete.obj");

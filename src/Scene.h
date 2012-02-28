@@ -6,10 +6,6 @@
 #include "Ground.h"
 #include "Camera.h"
 #include "Model.h"
-#include <CoreFoundation/CoreFoundation.h>
-#include <iostream>
-
-#include "AudioPlayer.h"
 
 class Scene {
    private:
@@ -17,7 +13,6 @@ class Scene {
       ObjectCollection objects;
       Camera camera;
       Ground ground;
-      AudioPlayer* ap;
 
       void updateKeyboardStateInObjects();
 

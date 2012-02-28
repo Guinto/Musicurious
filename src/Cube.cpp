@@ -3,6 +3,7 @@
 Cube::Cube() {
    initializeDefaultSize();
    audio = new Audio();
+   audio->play((string)"audio/test.wav");
 }
 
 void Cube::initializeDefaultSize() {

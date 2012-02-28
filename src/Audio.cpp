@@ -7,7 +7,17 @@ Audio::Audio() {
 }
 
 void Audio::play(string songFileName) {
-	MarSystemManager mng;
+	const char *fn = songFileName.c_str();
+
+	ap = AudioPlayer::file(fn);
+
+	if(!ap) {
+		std::cerr << "Error loading audio" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+	ap->play();
+	/*MarSystemManager mng;
 
 	playbacknet = mng.create("Series", "playbacknet");
 
@@ -17,7 +27,7 @@ void Audio::play(string songFileName) {
 
 	playbacknet->updControl("SoundFileSource/src/mrs_string/filename", songFileName);
 	playbacknet->updControl("Gain/gt/mrs_real/gain", 2.0);
-	playbacknet->updControl("AudioSink/dest/mrs_bool/initAudio", true);
+	playbacknet->updControl("AudioSink/dest/mrs_bool/initAudio", true);*/
 }
 
 void Audio::update(float timeElapsed) {
@@ -28,7 +38,14 @@ void Audio::update(float timeElapsed) {
 	{
 		playbacknet->tick();
 	}*/
-   //mainLoop();
+
+	   if (ap->isPlaying()) {
+	   CFRunLoopRunInMode (                           // 6
+	   			kCFRunLoopDefaultMode,                     // 7
+	   			0.25,                                      // 8
+	   			false                                      // 9
+	   		);
+	   }
 }
 
 void Audio::setTimeElapsed(float newTimeElapsed) {
