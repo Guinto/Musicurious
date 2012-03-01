@@ -8,6 +8,10 @@ Audio::Audio() {
 	readFiles();
 }
 
+Audio::~Audio() {
+	delete ap;
+}
+
 void Audio::play(char* songFileName) {
 	ap = AudioPlayer::file(songFileName);
 

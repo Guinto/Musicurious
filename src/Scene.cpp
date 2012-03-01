@@ -11,20 +11,33 @@ void Scene::draw() {
 }
 
 void Scene::update(float timeElapsed) {
+   keyboardActions();
    updateKeyboardStateInObjects();
    for (int i = 0; i < objects.size(); i++) {
       objects.get(i)->update(timeElapsed);
    }
 }
 
-void Scene::setKeyboardState(KeyboardState newKeyboardState) {
-   keyboardState = newKeyboardState;
-}
-
 void Scene::keyboardActions() {
 	if (keyboardState.get(' ')) {
+		destroyScene();
 		startScene();
 	}
+}
+
+void Scene::destroyScene() {
+	for (int i = 0; i < objects.size(); i++) {
+		objects.erase(i);
+	}
+	if (audio != 0) {
+		audio->~Audio();
+	}
+}
+
+void Scene::startScene() {
+   objects.add(new Cube());
+   audio = new Audio();
+   audio->play((char*)"audio/test.wav");
 }
 
 void Scene::updateKeyboardStateInObjects() {
@@ -34,14 +47,8 @@ void Scene::updateKeyboardStateInObjects() {
    }
 }
 
-void Scene::startScene() {
-   objects.add(new Cube());
-   Audio *audio = new Audio();
-   audio->play((char*)"audio/test.wav");
-}
 
 void Scene::setup(char* songFileName) {
-	startScene();
    /*Model *sharky = new Model();
    sharky->setModelFile((char*)"model/sharky/sharky_complete.obj");
    objects.add(sharky);*/

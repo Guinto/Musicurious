@@ -21,7 +21,7 @@ long startLoop;
 
 void setupScene(char **argv) {
 	char* songFileName = argv[1];
-   scene.setup(songFileName);
+	scene.setup(songFileName);
 }
 
 void loop(int n) {

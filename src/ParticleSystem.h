@@ -1,7 +1,6 @@
 #ifndef _PARTICLE_SYSTEM_H_
 #define _PARTICLE_SYSTEM_H_
 
-#include "KeyboardState.h"
 #include "Particle.h"
 #include "ObjectCollection.h"
 
@@ -27,7 +26,6 @@ class ParticleSystem: public Object {
       float particlesPerSecond;
       float timeElapsed;
       float totalTime;
-      KeyboardState keyboardState;
       ParticleProperties particleProperties;
 
       void setTimeElapsed(float newTimeElapsed);
@@ -50,7 +48,6 @@ class ParticleSystem: public Object {
       ParticleSystem();
       void draw();
       void update(float timeElapsed);
-      void setKeyboardState(KeyboardState newKeyboardState);
       void resetSystem();
 
       void increaseParticlesPerSecond();

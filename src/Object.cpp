@@ -5,3 +5,7 @@ void Object::setPosition(Point3d newPosition) {
    position.y = newPosition.y;
    position.z = newPosition.z;
 }
+
+void Object::setKeyboardState(KeyboardState newKeyboardState) {
+	keyboardState = newKeyboardState;
+}

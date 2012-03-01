@@ -78,10 +78,6 @@ void ParticleSystem::draw() {
    } glPopMatrix();
 }
 
-void ParticleSystem::setKeyboardState(KeyboardState newKeyboardState) {
-   keyboardState = newKeyboardState;
-}
-
 void ParticleSystem::keyboardActions() {
    if (keyboardState.get('\\')) {
       resetSystem();

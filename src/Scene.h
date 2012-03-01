@@ -7,22 +7,22 @@
 #include "Camera.h"
 #include "Model.h"
 
-class Scene {
+class Scene: public Object {
    private:
-      KeyboardState keyboardState;
       ObjectCollection objects;
       Camera camera;
       Ground ground;
+      Audio *audio;
 
       void updateKeyboardStateInObjects();
       void startScene();
+      void destroyScene();
       void keyboardActions();
 
    public:
       void setup(char* songFileName);
       void draw();
       void update(float timeElapsed);
-      void setKeyboardState(KeyboardState newKeyboardState);
 };
 
 #endif

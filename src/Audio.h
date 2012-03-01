@@ -45,6 +45,7 @@ class Audio {
 
    public:
       Audio();
+      ~Audio();
       void play(char* songFileName);
       void update(float timeElapsed);
       float getLoudness();
