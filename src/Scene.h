@@ -15,9 +15,11 @@ class Scene {
       Ground ground;
 
       void updateKeyboardStateInObjects();
+      void startScene();
+      void keyboardActions();
 
    public:
-      void setup(string songFileName);
+      void setup(char* songFileName);
       void draw();
       void update(float timeElapsed);
       void setKeyboardState(KeyboardState newKeyboardState);

@@ -20,7 +20,7 @@ Scene scene;
 long startLoop;
 
 void setupScene(char **argv) {
-   string songFileName = argv[1];
+	char* songFileName = argv[1];
    scene.setup(songFileName);
 }
 

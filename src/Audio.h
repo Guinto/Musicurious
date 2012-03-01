@@ -1,28 +1,22 @@
 #ifndef _AUDIO_H_
 #define _AUDIO_H_
 
-#include "../lib/marsyas/MarSystemManager.h"
 #include <math.h>
-#include <string.h>
+#include <sstream>
 #include <string>
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <CoreFoundation/CoreFoundation.h>
-#include <iostream>
 
 #include "AudioPlayer.h"
-
-using namespace std;
-using namespace Marsyas;
-
-
-using namespace std;
 
 class Audio {
    private:
 
-      MarSystem* playbacknet;
-      void readFile();
+      void readFiles();
+      void readLoudnessFile();
+      void readPitchFile();
 
       void setLoudness(float newLoudness);
       void setPitch(float newPitch);
@@ -42,16 +36,16 @@ class Audio {
 
       AudioPlayer* ap;
 
-      vector<float*> loudList;
-      vector<float*>::iterator loudit;
+      std::vector<float*> loudList;
+      std::vector<float*>::iterator loudit;
 
-      vector<float*> pitchList;
-      vector<float*>::iterator pitchit;
+      std::vector<float*> pitchList;
+      std::vector<float*>::iterator pitchit;
+
 
    public:
       Audio();
-      void play(string songFileName);
-      //void detectPitch();
+      void play(char* songFileName);
       void update(float timeElapsed);
       float getLoudness();
       float getPitch();

@@ -1,18 +1,18 @@
 #include "Audio.h"
 
+using namespace std;
+
 Audio::Audio() {
 	totalTime = 0;
 	totalTime2 = 0;
-	readFile();
+	readFiles();
 }
 
-void Audio::play(string songFileName) {
-	const char *fn = songFileName.c_str();
-
-	ap = AudioPlayer::file(fn);
+void Audio::play(char* songFileName) {
+	ap = AudioPlayer::file(songFileName);
 
 	if(!ap) {
-		std::cerr << "Error loading audio" << std::endl;
+		cerr << "Error loading audio" << endl;
 		exit(EXIT_FAILURE);
 	}
 
@@ -23,9 +23,6 @@ void Audio::update(float timeElapsed) {
 	setTimeElapsed(timeElapsed);
 	nextLoudness();
 	nextPitch();
-	/*if (ap->isPlaying()) {
-		CFRunLoopRunInMode (kCFRunLoopDefaultMode, 0.25, false);
-	}*/
 }
 
 void Audio::setTimeElapsed(float newTimeElapsed) {
@@ -36,8 +33,13 @@ void Audio::setTimeElapsed(float newTimeElapsed) {
 
 vector<string> getNextLineAndSplitIntoTokens(istream& str);
 
-void Audio::readFile() {
-    ifstream loudnessFile("audio/test.wav.lx.csv");
+void Audio::readFiles() {
+	readLoudnessFile();
+	readPitchFile();
+}
+
+void Audio::readLoudnessFile() {
+	ifstream loudnessFile("audio/test.wav.lx.csv");
 
     if (!loudnessFile.is_open()) {
     	cerr << "FILE NOT OPEN" << endl;
@@ -53,10 +55,12 @@ void Audio::readFile() {
     	}
     }
 
-    loudit = loudList.begin();
     loudnessFile.close();
+    loudit = loudList.begin();
+}
 
-    ifstream pitchFile("audio/pitch.txt");
+void Audio::readPitchFile() {
+	ifstream pitchFile("audio/pitch.txt");
 
     if (!pitchFile.is_open()) {
     	cerr << "FILE NOT OPEN" << endl;
@@ -71,8 +75,8 @@ void Audio::readFile() {
     	pitchList.push_back(pitchRaw);
     }
 
-    pitchit = pitchList.begin();
     pitchFile.close();
+    pitchit = pitchList.begin();
 }
 
 vector<string> getNextLineAndSplitIntoTokens(istream& str) {
@@ -91,7 +95,7 @@ vector<string> getNextLineAndSplitIntoTokens(istream& str) {
 
 void Audio::nextLoudness() {
 	float use = getLoudnessFileLength() / getAudioLength() * totalTime;
-	if (loudit != loudList.end() && use > 1) {
+	if (use > 1) {
 		for (int i = 0; i < use; i++) {
 			if (loudit + 1 != loudList.end()) {
 				loudit++;
@@ -104,7 +108,7 @@ void Audio::nextLoudness() {
 
 void Audio::nextPitch() {
 	float use = getPitchFileLength() / getAudioLength() * totalTime2;
-	if (pitchit != pitchList.end() && use > 1) {
+	if (use > 1) {
 		for (int i = 0; i < use; i++) {
 			if (pitchit + 1 != pitchList.end()) {
 				pitchit++;

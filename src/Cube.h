@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
 
 #include "ParticleSystem.h"
 #include "Audio.h"
@@ -13,8 +12,6 @@
 #define DEFAULT_CUBE_GREEN 1
 #define DEFAULT_CUBE_BLUE 1
 
-using namespace std;
-
 class Cube: public Object {
    private:
       float timeElapsed;
@@ -22,6 +19,7 @@ class Cube: public Object {
 
       Audio *audio;
       ParticleSystem *particleSystem;
+      KeyboardState keyboardState;
 
       void initializeDefaultSize();
       void setTimeElapsed(float newTimeElapsed);
@@ -32,6 +30,7 @@ class Cube: public Object {
       Cube();
       void draw();
       void update(float timeElapsed);
+      void setKeyboardState(KeyboardState newKeyboardState);
 };
 
 #endif

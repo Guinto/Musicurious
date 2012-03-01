@@ -4,7 +4,6 @@ Cube::Cube() {
    initializeDefaultSize();
    particleSystem = new ParticleSystem();
    audio = new Audio();
-   audio->play((string)"audio/test.wav");
 }
 
 void Cube::initializeDefaultSize() {
@@ -18,6 +17,11 @@ void Cube::update(float timeElapsed) {
    particleSystem->update(timeElapsed);
    movePositionWithPitch();
    growSizeWithLoudness();
+   particleSystem->setKeyboardState(keyboardState);
+}
+
+void Cube::setKeyboardState(KeyboardState newKeyboardState) {
+   keyboardState = newKeyboardState;
 }
 
 void Cube::growSizeWithLoudness() {
