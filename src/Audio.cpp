@@ -8,7 +8,8 @@ Audio::Audio() {
 	readFiles();
 }
 
-Audio::Audio(char* songFileName) {
+Audio::Audio(char* newSongFileName) {
+	songFileName = newSongFileName;
 	ap = AudioPlayer::file(songFileName);
 	if (!ap) {
 		cerr << "Error loading audio" << endl;
@@ -52,7 +53,8 @@ void Audio::readFiles() {
 }
 
 void Audio::readLoudnessFile() {
-	ifstream loudnessFile("audio/test.wav.lx.csv");
+	string loudnessFileName = songFileName;
+	ifstream loudnessFile((loudnessFileName + ".lx.csv").c_str());
 
     if (!loudnessFile.is_open()) {
     	cerr << "FILE NOT OPEN" << endl;
@@ -73,7 +75,8 @@ void Audio::readLoudnessFile() {
 }
 
 void Audio::readPitchFile() {
-	ifstream pitchFile("audio/pitch.txt");
+	string pitchFileName = songFileName;
+	ifstream pitchFile((pitchFileName + ".pitch").c_str());
 
     if (!pitchFile.is_open()) {
     	cerr << "FILE NOT OPEN" << endl;

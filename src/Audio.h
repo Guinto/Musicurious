@@ -33,6 +33,7 @@ class Audio {
       float totalTime2;
       float loudness;
       float pitch;
+      char* songFileName;
 
       AudioPlayer* ap;
 
