@@ -13,9 +13,10 @@ class Scene: public Object {
       Camera camera;
       Ground ground;
       Audio *audio;
+      char* songFileName;
 
       void updateKeyboardStateInObjects();
-      void startScene();
+      void startScene(char* songFileName);
       void destroyScene();
       void keyboardActions();
 

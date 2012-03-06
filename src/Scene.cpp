@@ -21,7 +21,7 @@ void Scene::update(float timeElapsed) {
 void Scene::keyboardActions() {
 	if (keyboardState.get(' ')) {
 		destroyScene();
-		startScene();
+		startScene(songFileName);
 	}
 }
 
@@ -34,9 +34,9 @@ void Scene::destroyScene() {
 	}
 }
 
-void Scene::startScene() {
-   objects.add(new Cube((char*)"audio/test.wav"));
-   audio = new Audio((char*)"audio/test.wav");
+void Scene::startScene(char* songFileName) {
+   audio = new Audio(songFileName);
+   objects.add(new Cube(audio));
    audio->play();
 }
 
@@ -48,7 +48,8 @@ void Scene::updateKeyboardStateInObjects() {
 }
 
 
-void Scene::setup(char* songFileName) {
+void Scene::setup(char* newSongFileName) {
+	songFileName = newSongFileName;
    /*Model *sharky = new Model();
    sharky->setModelFile((char*)"model/sharky/sharky_complete.obj");
    objects.add(sharky);*/

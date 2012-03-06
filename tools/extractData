@@ -1,0 +1,5 @@
+#!/bin/bash
+src_python/yaafe.py -r 44100 -f "lx: Loudness LMode=3 Relative=6" $1
+pitchextract $1
+rm boom_chick.wav p.mpl
+mv pitch.txt ../audio/$1.pitch
