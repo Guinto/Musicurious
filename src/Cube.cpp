@@ -6,6 +6,12 @@ Cube::Cube() {
    audio = new Audio();
 }
 
+Cube::Cube(char* songFileName) {
+   initializeDefaultSize();
+   particleSystem = new ParticleSystem();
+   audio = new Audio(songFileName);
+}
+
 void Cube::initializeDefaultSize() {
    size = DEFAULT_SIZE;
 }

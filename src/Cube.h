@@ -28,6 +28,7 @@ class Cube: public Object {
 
    public:
       Cube();
+      Cube(char* songFileName);
       void draw();
       void update(float timeElapsed);
       void setKeyboardState(KeyboardState newKeyboardState);

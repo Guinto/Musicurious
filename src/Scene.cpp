@@ -35,9 +35,9 @@ void Scene::destroyScene() {
 }
 
 void Scene::startScene() {
-   objects.add(new Cube());
-   audio = new Audio();
-   audio->play((char*)"audio/test.wav");
+   objects.add(new Cube((char*)"audio/test.wav"));
+   audio = new Audio((char*)"audio/test.wav");
+   audio->play();
 }
 
 void Scene::updateKeyboardStateInObjects() {

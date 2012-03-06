@@ -8,19 +8,28 @@ Audio::Audio() {
 	readFiles();
 }
 
-Audio::~Audio() {
-	delete ap;
-}
-
-void Audio::play(char* songFileName) {
+Audio::Audio(char* songFileName) {
 	ap = AudioPlayer::file(songFileName);
-
-	if(!ap) {
+	if (!ap) {
 		cerr << "Error loading audio" << endl;
 		exit(EXIT_FAILURE);
 	}
 
-	ap->play();
+	totalTime = 0;
+	totalTime2 = 0;
+	readFiles();
+}
+
+Audio::~Audio() {
+	delete ap;
+}
+
+void Audio::play() {
+	if (ap) {
+		ap->play();
+	} else {
+		cerr << "Error playing audio" << endl;
+	}
 }
 
 void Audio::update(float timeElapsed) {
@@ -140,13 +149,13 @@ void Audio::setLoudness(float newLoudness) {
 }
 
 float Audio::getAudioLength() {
-	return 11.023;
+	return ap->duration();
 }
 
 float Audio::getLoudnessFileLength() {
-	return 995 * 24;
+	return loudList.size();
 }
 
 float Audio::getPitchFileLength() {
-	return 284;
+	return pitchList.size();
 }
