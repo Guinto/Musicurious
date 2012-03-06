@@ -1,3 +1,4 @@
 *.o
 *.gch
+.DS_STORE
 music
