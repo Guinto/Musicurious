@@ -27,12 +27,14 @@ class Audio {
       float getAudioLength();
       float getPitchFileLength();
       float getLoudnessFileLength();
+      char* getSongFileName();
 
       float timeElapsed;
       float totalTime;
       float totalTime2;
       float loudness;
       float pitch;
+      char* songFileName;
 
       AudioPlayer* ap;
 
@@ -46,7 +48,7 @@ class Audio {
    public:
       Audio();
       ~Audio();
-      Audio(char* songFileName);
+      Audio(char* newSongFileName);
       void play();
       void update(float timeElapsed);
       float getLoudness();

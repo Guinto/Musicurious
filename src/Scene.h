@@ -13,14 +13,16 @@ class Scene: public Object {
       Camera camera;
       Ground ground;
       Audio *audio;
+      char* songFileName;
 
       void updateKeyboardStateInObjects();
-      void startScene();
+      void startScene(char* songFileName);
+      char* getSongFileName();
       void destroyScene();
       void keyboardActions();
 
    public:
-      void setup(char* songFileName);
+      void setup(char* newSongFileName);
       void draw();
       void update(float timeElapsed);
 };

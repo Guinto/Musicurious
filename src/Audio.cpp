@@ -8,7 +8,9 @@ Audio::Audio() {
 	readFiles();
 }
 
-Audio::Audio(char* songFileName) {
+Audio::Audio(char* newSongFileName) {
+	songFileName = newSongFileName;
+
 	ap = AudioPlayer::file(songFileName);
 	if (!ap) {
 		cerr << "Error loading audio" << endl;
@@ -52,10 +54,13 @@ void Audio::readFiles() {
 }
 
 void Audio::readLoudnessFile() {
-	ifstream loudnessFile("audio/test.wav.lx.csv");
+	char* loudnessFileName = (char*)malloc(sizeof(getSongFileName()));
+	strcpy(loudnessFileName, getSongFileName());
+	strcat(loudnessFileName, ".lx.csv");
+	ifstream loudnessFile(loudnessFileName);
 
     if (!loudnessFile.is_open()) {
-    	cerr << "FILE NOT OPEN" << endl;
+    	cerr << "FILE " << loudnessFileName << " NOT OPEN" << endl;
     	exit(EXIT_FAILURE);
     }
 
@@ -72,11 +77,18 @@ void Audio::readLoudnessFile() {
     loudit = loudList.begin();
 }
 
+char* Audio::getSongFileName() {
+	return songFileName;
+}
+
 void Audio::readPitchFile() {
-	ifstream pitchFile("audio/pitch.txt");
+	char* pitchFileName = (char*)malloc(sizeof(getSongFileName()));
+	strcpy(pitchFileName, getSongFileName());
+	strcat(pitchFileName, ".pitch");
+	ifstream pitchFile(pitchFileName);
 
     if (!pitchFile.is_open()) {
-    	cerr << "FILE NOT OPEN" << endl;
+    	cerr << "FILE " << pitchFileName << " NOT OPEN" << endl;
     	exit(EXIT_FAILURE);
     }
 
