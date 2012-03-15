@@ -2,7 +2,7 @@
  * Model.cpp
  *
  *  Created on: Feb 23, 2012
- *      Author: ellingsenp
+ *      Author: Trent Ellingsen
  */
 
 #include "Model.h"
@@ -42,15 +42,22 @@ void Model::init() {
     fclose(fp);
 }
 
+#define SIZE 2
+
 /* OBJ Loader written by Kamran */
 void Model::draw() {
 	glPushMatrix(); {
+		glColor3f(0.5, 0.5, 0.5);
+		glTranslatef(position.x, position.y, position.z);
 		glBegin(GL_TRIANGLES); {
-			for (int i = 0; i < triangleCount; i++) {
+			glVertex3f(0, 0, 0);
+			glVertex3f(1, 1, 1);
+			glVertex3f(2, 2, 2);
+			/*for (int i = 0; i < triangleCount; i++) {
 				glVertex3f(v[t[i].v1-1].x * SIZE, v[t[i].v1-1].y * SIZE, v[t[i].v1-1].z * SIZE);
 				glVertex3f(v[t[i].v2-1].x * SIZE, v[t[i].v2-1].y * SIZE, v[t[i].v2-1].z * SIZE);
 				glVertex3f(v[t[i].v3-1].x * SIZE, v[t[i].v3-1].y * SIZE, v[t[i].v3-1].z * SIZE);
-			}
+			}*/
 		} glEnd();
 	} glPopMatrix();
 
@@ -58,11 +65,9 @@ void Model::draw() {
 }
 
 Model::Model() {
-	// TODO Auto-generated constructor stub
-
+	setModelFile((char*)"model/sharky/sharky_complete.obj");
 }
 
 Model::~Model() {
-	// TODO Auto-generated destructor stub
 }
 

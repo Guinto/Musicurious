@@ -26,7 +26,7 @@ struct Vertex {
       float z;
 };
 
-#define SIZE 0.25
+//#define SIZE 0.25
 
 class Model: public Object {
 private:

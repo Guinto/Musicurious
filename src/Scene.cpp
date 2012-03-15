@@ -13,8 +13,13 @@ void Scene::draw() {
 void Scene::update(float timeElapsed) {
    keyboardActions();
    updateKeyboardStateInObjects();
+   if (audio != 0) {
+	   audio->update(timeElapsed);
+   }
    for (int i = 0; i < objects.size(); i++) {
       objects.get(i)->update(timeElapsed);
+      objects.get(i)->movePositionWithPitch();
+      objects.get(i)->growSizeWithLoudness();
    }
 }
 
@@ -36,7 +41,12 @@ void Scene::destroyScene() {
 
 void Scene::startScene(char* songFileName) {
    audio = new Audio(songFileName);
-   objects.add(new Cube(audio));
+   Cube *c = new Cube();
+   c->setAudio(audio);
+   objects.add(c);
+   /*Model *m = new Model();
+   m->setAudio(audio);
+   objects.add(m);*/
    audio->play();
 }
 
