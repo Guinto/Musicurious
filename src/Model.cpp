@@ -18,47 +18,78 @@ void Model::update(float timeElapsed) {
 
 }
 
-void Model::init() {
-    vertexCount = 0;
-    triangleCount = 0;
+bool Model::isTriangle(char* test) {
+	int numSpaces = 0;
 
-    char line[100];
-
-	FILE *fp = fopen(fileName, "r");
-
-    if (fp != NULL) {
-        while (fgets(line, 99, fp)) {
-              if (line[0] == 'v') {
-                  sscanf(line, "%*c %f %f %f", &v[vertexCount].x, &v[vertexCount].y, &v[vertexCount].z);
-                  vertexCount++;
-              }
-              else if (line[0] == 'f') {
-                  sscanf(line, "%*c %d %d %d", &t[triangleCount].v1, &t[triangleCount].v2, &t[triangleCount].v3);
-                  triangleCount++;
-              }
-        }
-    }
-
-    fclose(fp);
+	for (int i = 0; test[i] != '\0'; i++) {
+		if (test[i] == ' ') {
+			numSpaces++;
+		}
+	}
+	return numSpaces == 3;
 }
 
-#define SIZE 2
+void Model::init() {
+	string modelFileName = fileName;
+	ifstream modelFile(modelFileName.c_str());
 
-/* OBJ Loader written by Kamran */
+    if (!modelFile.is_open()) {
+    	cerr << "FILE NOT OPEN" << endl;
+    	exit(EXIT_FAILURE);
+    }
+
+    while (modelFile.good()) {
+		string modelLine;
+		getline(modelFile, modelLine);
+		if (modelLine.c_str()[0] == 'v') {
+			float x, y, z;
+			sscanf(modelLine.c_str(), "%*c %f %f %f", &x, &y, &z);
+			Point3d p = Point3d(x, y, z);
+			verticies.push_back(p);
+		} else if (modelLine.c_str()[0] == 'f') {
+			Face f;
+			int v1, v2, v3, v4;
+			if (isTriangle((char*) modelLine.c_str())) {
+				sscanf(modelLine.c_str(), "%*c %d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &v1, &v2, &v3);
+				v4 = -1;
+			} else {
+				sscanf(modelLine.c_str(), "%*c %d/%*d/%*d %d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &v1, &v2, &v3, &v4);
+				f.v4 = v4;
+			}
+			f.v1 = v1;
+			f.v2 = v2;
+			f.v3 = v3;
+			faces.push_back(f);
+		}
+    }
+
+    modelFile.close();
+}
+
 void Model::draw() {
 	glPushMatrix(); {
 		glColor3f(0.5, 0.5, 0.5);
+		glRotatef(90, 0, 1, 0);
 		glTranslatef(position.x, position.y, position.z);
-		glBegin(GL_TRIANGLES); {
-			glVertex3f(0, 0, 0);
-			glVertex3f(1, 1, 1);
-			glVertex3f(2, 2, 2);
-			/*for (int i = 0; i < triangleCount; i++) {
-				glVertex3f(v[t[i].v1-1].x * SIZE, v[t[i].v1-1].y * SIZE, v[t[i].v1-1].z * SIZE);
-				glVertex3f(v[t[i].v2-1].x * SIZE, v[t[i].v2-1].y * SIZE, v[t[i].v2-1].z * SIZE);
-				glVertex3f(v[t[i].v3-1].x * SIZE, v[t[i].v3-1].y * SIZE, v[t[i].v3-1].z * SIZE);
-			}*/
-		} glEnd();
+		glScalef(2, 2, 2);
+		for(int i = 0; i < faces.size(); i++) {
+			//glBegin(GL_POLYGON);
+			if (faces.at(i).v4 == -1) {
+			glBegin(GL_TRIANGLES);
+				glVertex3f(verticies.at(faces.at(i).v1 - 1).x, verticies.at(faces.at(i).v1 - 1).y, verticies.at(faces.at(i).v1 - 1).z);
+				glVertex3f(verticies.at(faces.at(i).v2 - 1).x, verticies.at(faces.at(i).v2 - 1).y, verticies.at(faces.at(i).v2 - 1).z);
+				glVertex3f(verticies.at(faces.at(i).v3 - 1).x, verticies.at(faces.at(i).v3 - 1).y, verticies.at(faces.at(i).v3 - 1).z);
+			glEnd();
+			} else {
+			glBegin(GL_QUADS);
+				glVertex3f(verticies.at(faces.at(i).v1 - 1).x, verticies.at(faces.at(i).v1 - 1).y, verticies.at(faces.at(i).v1 - 1).z);
+				glVertex3f(verticies.at(faces.at(i).v2 - 1).x, verticies.at(faces.at(i).v2 - 1).y, verticies.at(faces.at(i).v2 - 1).z);
+				glVertex3f(verticies.at(faces.at(i).v3 - 1).x, verticies.at(faces.at(i).v3 - 1).y, verticies.at(faces.at(i).v3 - 1).z);
+				glVertex3f(verticies.at(faces.at(i).v4 - 1).x, verticies.at(faces.at(i).v4 - 1).y, verticies.at(faces.at(i).v4 - 1).z);
+			glEnd();
+			}
+			//glEnd();
+		}
 	} glPopMatrix();
 
     glFlush();
@@ -70,4 +101,3 @@ Model::Model() {
 
 Model::~Model() {
 }
-

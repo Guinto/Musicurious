@@ -11,31 +11,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <fstream>
+
 #include "Utilities.h"
 #include "Object.h"
 
-struct Triangle {
-       int v1;
-       int v2;
-       int v3;
+struct Face {
+	int v1, v2, v3, v4;
 };
 
-struct Vertex {
-      float x;
-      float y;
-      float z;
-};
-
-//#define SIZE 0.25
+#define SIZE 2
 
 class Model: public Object {
 private:
 	char* fileName;
-	Vertex v[50000];
-	Triangle t[50000];
-	int vertexCount;
-	int triangleCount;
+	std::vector<Point3d> verticies;
+	std::vector<Face> faces;
 	void init();
+	bool isTriangle(char* modelLine);
 
 public:
 	Model();

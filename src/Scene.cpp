@@ -41,12 +41,12 @@ void Scene::destroyScene() {
 
 void Scene::startScene(char* songFileName) {
    audio = new Audio(songFileName);
-   Cube *c = new Cube();
+   /*Cube *c = new Cube();
    c->setAudio(audio);
-   objects.add(c);
-   /*Model *m = new Model();
+   objects.add(c);*/
+   Model *m = new Model();
    m->setAudio(audio);
-   objects.add(m);*/
+   objects.add(m);
    audio->play();
 }
 

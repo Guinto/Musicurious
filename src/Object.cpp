@@ -11,7 +11,7 @@ void Object::setPosition(Point3d newPosition) {
 }
 
 void Object::movePositionWithPitch() {
-	position.y = audio->getPitch() * 0.01 - 2;
+	position.y = audio->getPitch() * 0.01 + 0.7;
 }
 
 void Object::growSizeWithLoudness() {
