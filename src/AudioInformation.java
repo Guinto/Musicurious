@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class AudioInformation {
 
 	private String audioFileName;
+	private ArrayList<Float> loudnessValues, pitchValues;
 	
 	public AudioInformation(String audioFileName) {
 		this.audioFileName = audioFileName;
@@ -18,7 +19,7 @@ public class AudioInformation {
 	}
 	
 	public void readLoudnessFile() {
-		ArrayList<Float> values = new ArrayList<Float>();
+		loudnessValues = new ArrayList<Float>();
 		String loudnessFileName = audioFileName + ".lx.csv";
 		
 		Scanner scanner = null;
@@ -36,13 +37,25 @@ public class AudioInformation {
 			}
 			String[] valuesInLine = line.split("[,]");
 			for (int i = 0; i < valuesInLine.length; i++) {
-				values.add(Float.parseFloat(valuesInLine[i]));
+				loudnessValues.add(Float.parseFloat(valuesInLine[i]));
 			}
 		}
-		System.out.println(values);
 	}
 	
 	public void readPitchFile() {
+		pitchValues = new ArrayList<Float>();
+		String pitchFileName = audioFileName + ".pitch";
 		
+		Scanner scanner = null;
+		
+		try {
+			scanner = new Scanner(new File(pitchFileName));
+		} catch (FileNotFoundException e) {
+			System.err.println("FILE " + pitchFileName + " NOT FOUND");
+		}
+		
+		while (scanner.hasNextFloat()) {
+			pitchValues.add(scanner.nextFloat());
+		}
 	}
 }

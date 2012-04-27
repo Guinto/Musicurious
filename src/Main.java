@@ -6,7 +6,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Main runner = new Main();
-		runner.playAudio();
+		//runner.playAudio();
 		runner.getAudioInformation();
 	}
 	
