@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * Audio player that currently uses a library found here:
+ * http://code.google.com/p/java-audio-player/
+ * 
+ */
 	
 import maryb.player.Player;
 
