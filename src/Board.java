@@ -11,7 +11,7 @@ public class Board extends JPanel implements Runnable {
     private Instrument instrument;
     private Thread animator;
 
-    private final int DELAY = 50;
+    private final int DELAY = 50 / 3;
 
     public Board(AudioInformation audioInfo) {
         setBackground(Color.BLACK);
@@ -55,15 +55,13 @@ public class Board extends JPanel implements Runnable {
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleep = DELAY - timeDiff;
 
-            if (sleep < 0)
-                sleep = 2;
+            beforeTime = System.currentTimeMillis();
             try {
-                Thread.sleep(sleep);
+                Thread.sleep(Math.abs(sleep));
             } catch (InterruptedException e) {
                 System.out.println("interrupted");
             }
 
-            beforeTime = System.currentTimeMillis();
         }
     }
 }
