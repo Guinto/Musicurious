@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
@@ -10,6 +12,7 @@ public class Board extends JPanel implements Runnable {
 
     private Instrument instrument;
     private Thread animator;
+    private boolean playIsPressed;
 
     private final int DELAY = 50 / 3;
 
@@ -20,6 +23,8 @@ public class Board extends JPanel implements Runnable {
         instrument = new Instrument();
         instrument.setImage("sprites/23G.png");
         instrument.setAudioInformation(audioInfo);
+        
+        playIsPressed = false;
     }
 
     public void addNotify() {
@@ -37,31 +42,37 @@ public class Board extends JPanel implements Runnable {
         g.dispose();
     }
 
+    public void play() {
+    	playIsPressed = true;
+    }
+    
     public void cycle(long timeElapsed) {
     	instrument.update(timeElapsed);
     }
     
     public void run() {
-
         long beforeTime, timeDiff = 0, sleep;
-
-        beforeTime = System.currentTimeMillis();
+   		beforeTime = System.currentTimeMillis();
 
         while (true) {
-
-            cycle(timeDiff);
-            repaint();
-
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-
-            beforeTime = System.currentTimeMillis();
-            try {
-                Thread.sleep(Math.abs(sleep));
-            } catch (InterruptedException e) {
-                System.out.println("interrupted");
-            }
-
-        }
+        	System.out.println();
+        	if (playIsPressed) {
+	            cycle(timeDiff);
+	            System.out.println(timeDiff);
+	            repaint();
+	
+	            timeDiff = System.currentTimeMillis() - beforeTime;
+	            sleep = DELAY - timeDiff;
+	
+	            beforeTime = System.currentTimeMillis();
+	            try {
+	                Thread.sleep(Math.abs(sleep));
+	            } catch (InterruptedException e) {
+	                System.out.println("interrupted");
+	            }
+	        } else {
+	        	beforeTime = System.currentTimeMillis();
+	        }
+    	}
     }
 }

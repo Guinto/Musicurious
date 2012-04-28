@@ -24,6 +24,10 @@ public class AudioInformation {
 		setIterators();
 	}
 	
+	/**
+	 * Using a library called MP3SPI
+	 * Found here: http://www.javazoom.net/mp3spi/documents.html
+	 */
 	private int getDurationWithMp3Spi(File file) throws UnsupportedAudioFileException, IOException {
 		int mili = -1;
 		
@@ -42,13 +46,13 @@ public class AudioInformation {
 	
 	public int getAudioLength() {
 		String hackedFileName = audioFileName.substring(0, audioFileName.length() - 3) + "mp3";
+		
 		try {
 			return getDurationWithMp3Spi(new File(hackedFileName));
-		} catch (UnsupportedAudioFileException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} 
+		
 		return -1;
 	}
 	
