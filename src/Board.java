@@ -2,8 +2,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
@@ -46,8 +44,10 @@ public class Board extends JPanel implements Runnable {
     	playIsPressed = true;
     }
     
-    public void cycle(long timeElapsed) {
-    	instrument.update(timeElapsed);
+    public void cycle(long timeElapsed, boolean playIsPressed) {
+    	if (playIsPressed) {
+    		instrument.update(timeElapsed);
+    	}
     }
     
     public void run() {
@@ -55,24 +55,18 @@ public class Board extends JPanel implements Runnable {
    		beforeTime = System.currentTimeMillis();
 
         while (true) {
-        	System.out.println();
-        	if (playIsPressed) {
-	            cycle(timeDiff);
-	            System.out.println(timeDiff);
-	            repaint();
-	
-	            timeDiff = System.currentTimeMillis() - beforeTime;
-	            sleep = DELAY - timeDiff;
-	
-	            beforeTime = System.currentTimeMillis();
-	            try {
-	                Thread.sleep(Math.abs(sleep));
-	            } catch (InterruptedException e) {
-	                System.out.println("interrupted");
-	            }
-	        } else {
-	        	beforeTime = System.currentTimeMillis();
-	        }
+            cycle(timeDiff, playIsPressed);
+            repaint();
+
+            timeDiff = System.currentTimeMillis() - beforeTime;
+            sleep = DELAY - timeDiff;
+
+            beforeTime = System.currentTimeMillis();
+            try {
+                Thread.sleep(Math.abs(sleep));
+            } catch (InterruptedException e) {
+                System.out.println("interrupted");
+            }
     	}
     }
 }
