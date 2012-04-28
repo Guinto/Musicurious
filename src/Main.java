@@ -7,12 +7,8 @@ public class Main {
 	public static void main(String[] args) {
 		Main runner = new Main();
 		//runner.playAudio();
-		runner.getAudioInformation();
-	}
-	
-	public void getAudioInformation() {
-		String hackedFileName = audioFileName.substring(0, audioFileName.length() - 3) + "wav";
-		new AudioInformation(hackedFileName);
+		AudioInformation audioInfo = runner.getAudioInformation();
+		runner.showVisual(audioInfo);
 	}
 	
 	public void playAudio() {
@@ -20,6 +16,15 @@ public class Main {
 		audioPlayer.setVolume( 0.7f );
 		audioPlayer.setSourceLocation(audioFileName);
 		audioPlayer.play();
+	}
+	
+	public AudioInformation getAudioInformation() {
+		String hackedFileName = audioFileName.substring(0, audioFileName.length() - 3) + "wav";
+		return new AudioInformation(hackedFileName);
+	}
+	
+	public void showVisual(AudioInformation audioInfo) {
+		new Scene(audioInfo);
 	}
 
 }
