@@ -80,6 +80,11 @@ public class AudioInformation {
 		return loudnessValues.size();
 	}
 	
+	public void resetIterators() {
+		pitchIterator = pitchValues.iterator();
+		loudnessIterator = loudnessValues.iterator();
+	}
+	
 	private void readFiles() {
 		readLoudnessFile();
 		readPitchFile();

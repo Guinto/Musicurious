@@ -10,14 +10,19 @@ public class Instrument {
 	private Point point;
 	private AudioInformation audioInfo;
 	private float totalPitchTime, totalLoudnessTime;
+	private int width, height;
+	private int size;
 	
 	public Instrument() {
-		point = new Point(0, 0);
+		point = new Point(300, 0);
 		totalPitchTime = totalLoudnessTime = 0;
 	}
 	
 	public void setImage(String fileName) {
 		imageIcon = new ImageIcon(fileName);
+		width = imageIcon.getIconWidth();
+		height = imageIcon.getIconHeight();
+		size = 0;
 	}
 	
 	public Image getImage() {
@@ -25,7 +30,7 @@ public class Instrument {
 	}
 	
 	public void update(long timeElapsed) {
-		//syncPitch(timeElapsed);
+		syncPitch(timeElapsed);
 		syncLoudness(timeElapsed);
 	}
 	
@@ -42,9 +47,19 @@ public class Instrument {
 	}
 	
 	private void syncPitch(float timeElapsed) {
-		if (audioInfo.hasNextPitch()) {
-			float pitch = audioInfo.getNextPitch(timeElapsed);
-			point.y = (int)pitch;
+		if (timeElapsed > 0) {
+			float iterationsPerMillisecond = audioInfo.getPitchSize() / audioInfo.getAudioLength();
+			totalPitchTime += timeElapsed;
+			float iterations = totalPitchTime * iterationsPerMillisecond;
+			float leftOvers = iterations - (int)iterations;
+			
+			for (int i = 0; i < iterations; i++) {
+				if (audioInfo.hasNextPitch()) {
+					float pitch = audioInfo.getNextPitch(timeElapsed);
+					point.y = 360 - (int)pitch;
+				}
+			}
+			totalPitchTime = leftOvers;
 		}
 	}
 	
@@ -58,10 +73,22 @@ public class Instrument {
 			for (int i = 0; i < iterations; i++) {
 				if (audioInfo.hasNextLoudness()) {
 					float loudness = audioInfo.getNextLoudness(timeElapsed);
-					point.x = (int)loudness * 100;
+					size = (int)loudness * 10;
 				}
 			}
 			totalLoudnessTime = leftOvers;
 		}
+	}
+
+	public int getWidth() {
+		return width + size;
+	}
+
+	public int getHeight() {
+		return height + size;
+	}
+
+	public AudioInformation getAudioInformation() {
+		return audioInfo;
 	}
 }

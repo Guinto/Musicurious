@@ -10,7 +10,7 @@ public class Board extends JPanel implements Runnable {
 
     private Instrument instrument;
     private Thread animator;
-    private boolean playIsPressed;
+    private boolean playIsPressed, playing;
 
     private final int DELAY = 50 / 3;
 
@@ -22,7 +22,7 @@ public class Board extends JPanel implements Runnable {
         instrument.setImage("sprites/23G.png");
         instrument.setAudioInformation(audioInfo);
         
-        playIsPressed = false;
+        playIsPressed = playing = false;
     }
 
     public void addNotify() {
@@ -35,7 +35,8 @@ public class Board extends JPanel implements Runnable {
         super.paint(g);
 
         Graphics2D g2d = (Graphics2D)g;
-        g2d.drawImage(instrument.getImage(), instrument.getX(), instrument.getY(), this);
+        g2d.drawImage(instrument.getImage(), instrument.getX(), instrument.getY(), 
+        			  instrument.getWidth(), instrument.getHeight(), this);
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
     }
@@ -44,8 +45,13 @@ public class Board extends JPanel implements Runnable {
     	playIsPressed = true;
     }
     
-    public void cycle(long timeElapsed, boolean playIsPressed) {
+    public void cycle(long timeElapsed) {
     	if (playIsPressed) {
+    		instrument.getAudioInformation().resetIterators();
+    		playing = true;
+    		playIsPressed = false;
+    	}
+    	if (playing) {
     		instrument.update(timeElapsed);
     	}
     }
@@ -55,7 +61,7 @@ public class Board extends JPanel implements Runnable {
    		beforeTime = System.currentTimeMillis();
 
         while (true) {
-            cycle(timeDiff, playIsPressed);
+            cycle(timeDiff);
             repaint();
 
             timeDiff = System.currentTimeMillis() - beforeTime;
