@@ -3,50 +3,57 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-
 public class Scene extends JFrame {
 
 	public Scene(AudioInformation audioInfo) {
-		
+
 		Board board = new Board(audioInfo);
 		add(board);
-		
+
 		addKeyListener(new BoardKeyListener(board));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1280, 720);
-        setLocationRelativeTo(null);
-        setTitle("Scene");
-        setResizable(false);
-        setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(1280, 720);
+		setLocationRelativeTo(null);
+		setTitle("Scene");
+		setResizable(false);
+		setVisible(true);
 	}
-	
+
 	public void playAudio() {
 		AudioPlayer audioPlayer = new AudioPlayer();
-		audioPlayer.setVolume( 0.7f );
+		audioPlayer.setVolume(0.7f);
 		audioPlayer.setSourceLocation("audio/test.mp3");
 		audioPlayer.play();
 	}
-	
+
 	class BoardKeyListener implements KeyListener {
 		private Board board;
-		
+
 		public BoardKeyListener(Board board) {
 			this.board = board;
 		}
-		
+
 		@Override
-		public void keyTyped(KeyEvent e) { }
-		
+		public void keyTyped(KeyEvent e) {
+		}
+
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyChar() == ' ') {
 				board.play();
+				try {
+					Thread.sleep(90);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				playAudio();
 			}
 		}
-		
+
 		@Override
-		public void keyPressed(KeyEvent e) { }
-		
+		public void keyPressed(KeyEvent e) {
+		}
+
 	}
 }

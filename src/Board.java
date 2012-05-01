@@ -2,77 +2,60 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
+public class Board extends JPanel {
 
-public class Board extends JPanel implements Runnable {
+	private Instrument instrument;
+	private boolean playIsPressed, playing;
+	private Timer timer;
 
-    private Instrument instrument;
-    private Thread animator;
-    private boolean playIsPressed, playing;
+	private final int DELAY = 50 / 3;
 
-    private final int DELAY = 50 / 3;
+	public Board(AudioInformation audioInfo) {
+		setBackground(Color.BLACK);
+		setDoubleBuffered(true);
 
-    public Board(AudioInformation audioInfo) {
-        setBackground(Color.BLACK);
-        setDoubleBuffered(true);
+		instrument = new Instrument();
+		instrument.setImage("sprites/23G.png");
+		instrument.setAudioInformation(audioInfo);
 
-        instrument = new Instrument();
-        instrument.setImage("sprites/23G.png");
-        instrument.setAudioInformation(audioInfo);
-        
-        playIsPressed = playing = false;
-    }
+		playIsPressed = playing = false;
 
-    public void addNotify() {
-        super.addNotify();
-        animator = new Thread(this);
-        animator.start();
-    }
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new ScheduleTask(), 0, 10);
+	}
 
-    public void paint(Graphics g) {
-        super.paint(g);
+	class ScheduleTask extends TimerTask {
 
-        Graphics2D g2d = (Graphics2D)g;
-        g2d.drawImage(instrument.getImage(), instrument.getX(), instrument.getY(), 
-        			  instrument.getWidth(), instrument.getHeight(), this);
-        Toolkit.getDefaultToolkit().sync();
-        g.dispose();
-    }
+		public void run() {
+			if (playIsPressed) {
+				instrument.getAudioInformation().resetIterators();
+				playing = true;
+				playIsPressed = false;
+			}
+			if (playing) {
+				instrument.update(10);
+			}
+			repaint();
+		}
+	}
 
-    public void play() {
-    	playIsPressed = true;
-    }
-    
-    public void cycle(long timeElapsed) {
-    	if (playIsPressed) {
-    		instrument.getAudioInformation().resetIterators();
-    		playing = true;
-    		playIsPressed = false;
-    	}
-    	if (playing) {
-    		instrument.update(timeElapsed);
-    	}
-    }
-    
-    public void run() {
-        long beforeTime, timeDiff = 0, sleep;
-   		beforeTime = System.currentTimeMillis();
+	public void paint(Graphics g) {
+		super.paint(g);
 
-        while (true) {
-            cycle(timeDiff);
-            repaint();
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(instrument.getImage(), instrument.getX(),
+				instrument.getY(), instrument.getWidth(),
+				instrument.getHeight(), this);
+		Toolkit.getDefaultToolkit().sync();
+		g.dispose();
+	}
 
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-
-            beforeTime = System.currentTimeMillis();
-            try {
-                Thread.sleep(Math.abs(sleep));
-            } catch (InterruptedException e) {
-                System.out.println("interrupted");
-            }
-    	}
-    }
+	public void play() {
+		playIsPressed = true;
+	}
 }
