@@ -19,8 +19,8 @@ public class Instrument {
 
 	public void setImage(String fileName) {
 		imageIcon = new ImageIcon(fileName);
-		width = imageIcon.getIconWidth();
-		height = imageIcon.getIconHeight();
+		width = imageIcon.getIconWidth() / 2;
+		height = imageIcon.getIconHeight() / 2;
 		size = 0;
 	}
 
@@ -30,7 +30,7 @@ public class Instrument {
 
 	public void update(long timeElapsed) {
 		syncPitch(timeElapsed);
-		syncLoudness(timeElapsed);
+		//syncLoudness(timeElapsed);
 	}
 
 	public int getX() {

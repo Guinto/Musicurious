@@ -13,8 +13,6 @@ public class Board extends JPanel {
 	private boolean playIsPressed, playing;
 	private Timer timer;
 
-	private final int DELAY = 50 / 3;
-
 	public Board(AudioInformation audioInfo) {
 		setBackground(Color.BLACK);
 		setDoubleBuffered(true);

@@ -46,9 +46,7 @@ public class AudioInformation {
 	}
 
 	public int getAudioLength() {
-		String hackedFileName = audioFileName.substring(0,
-				audioFileName.length() - 3)
-				+ "mp3";
+		String hackedFileName = audioFileName.substring(0, audioFileName.length() - 3) + "mp3";
 
 		try {
 			return getDurationWithMp3Spi(new File(hackedFileName));

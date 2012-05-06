@@ -10,9 +10,7 @@ public class Main {
 	}
 
 	public AudioInformation getAudioInformation() {
-		String hackedFileName = audioFileName.substring(0,
-				audioFileName.length() - 3)
-				+ "wav";
+		String hackedFileName = audioFileName.substring(0, audioFileName.length() - 3) + "wav";
 		return new AudioInformation(hackedFileName);
 	}
 
