@@ -26,4 +26,8 @@ public class AudioPlayer {
 	public void setVolume(float volume) {
 		player.setCurrentVolume(volume);
 	}
+	
+	public long getCurrentTime() {
+		return player.getCurrentPosition() / 1000;
+	}
 }

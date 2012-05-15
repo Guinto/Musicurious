@@ -1,16 +1,47 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-public class Scene extends JFrame {
+public class Scene extends JFrame implements ChangeListener {
 
-	public Scene(AudioInformation audioInfo) {
-
-		Board board = new Board(audioInfo);
+	private AudioPlayer audioPlayer;
+	private Board board;
+	
+	public Scene() {
+		audioPlayer = new AudioPlayer();
+		audioPlayer.setVolume(0.7f);
+		audioPlayer.setSourceLocation("audio/test_2.mp3");
+		
+		ArrayList<AudioInformation> instrumentInfos = new ArrayList<AudioInformation>();
+		
+		String audioFileName = "audio/test_2.mp3";
+		String hackedFileName = audioFileName.substring(0, audioFileName.length() - 4) + "_piano.wav";
+		AudioInformation pianoInfo = new AudioInformation(hackedFileName);
+		pianoInfo.setAudioPlayer(audioPlayer);
+		
+		hackedFileName = audioFileName.substring(0, audioFileName.length() - 4) + "_guitar.wav";
+		AudioInformation guitarInfo = new AudioInformation(hackedFileName);
+		guitarInfo.setAudioPlayer(audioPlayer);
+		
+		instrumentInfos.add(pianoInfo);
+		instrumentInfos.add(guitarInfo);
+		
+		board = new Board(instrumentInfos);
 		add(board);
-
 		addKeyListener(new BoardKeyListener(board));
+
+		JFrame f = new JFrame();
+		f.setSize(300, 100);
+		JSlider sizeSlider = new JSlider(0, 100, 0);
+		f.add(sizeSlider);
+		sizeSlider.addChangeListener(this);
+		f.setVisible(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1280, 720);
 		setLocationRelativeTo(null);
@@ -20,9 +51,6 @@ public class Scene extends JFrame {
 	}
 
 	public void playAudio() {
-		AudioPlayer audioPlayer = new AudioPlayer();
-		audioPlayer.setVolume(0.7f);
-		audioPlayer.setSourceLocation("audio/test.mp3");
 		audioPlayer.play();
 	}
 
@@ -55,5 +83,14 @@ public class Scene extends JFrame {
 		public void keyPressed(KeyEvent e) {
 		}
 
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+        JSlider source = (JSlider)e.getSource();
+        int size = (int)source.getValue();
+        for (Instrument instrument : board.getInstruments()) {
+        	instrument.setSize(size);
+        }
 	}
 }

@@ -17,11 +17,16 @@ public class AudioInformation {
 	private String audioFileName;
 	private ArrayList<Float> loudnessValues, pitchValues;
 	private Iterator<Float> loudnessIterator, pitchIterator;
+	private AudioPlayer audioPlayer;
 
 	public AudioInformation(String audioFileName) {
 		this.audioFileName = audioFileName;
 		readFiles();
 		setIterators();
+	}
+	
+	public long getCurrentTime() {
+		return audioPlayer.getCurrentTime();
 	}
 
 	/**
@@ -46,7 +51,7 @@ public class AudioInformation {
 	}
 
 	public int getAudioLength() {
-		String hackedFileName = audioFileName.substring(0, audioFileName.length() - 3) + "mp3";
+		String hackedFileName = "audio/test_2.mp3";//audioFileName.substring(0, audioFileName.length() - 3) + "mp3";
 
 		try {
 			return getDurationWithMp3Spi(new File(hackedFileName));
@@ -139,5 +144,9 @@ public class AudioInformation {
 
 	public float getPitchBegin() {
 		return pitchValues.get(0);
+	}
+
+	public void setAudioPlayer(AudioPlayer audioPlayer) {
+		this.audioPlayer = audioPlayer;
 	}
 }
